@@ -166,3 +166,11 @@ bower_components
 /vendor
 /node_modules
 .env
+
+/storage/*
+!/storage/app/
+!/storage/app/public/
+!/storage/framework/
+!/storage/framework/cache/
+!/storage/framework/views/
+!/storage/logs/
