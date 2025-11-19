@@ -13,10 +13,10 @@ class FirstController extends Controller
                 return view("index", compact("albums"));
             }
     function album($id) {
-                $photos = DB::select("SELECT photos.*, GROUP_CONCAT(tags.nom SEPARATOR ', ') AS tags
+                $photos = DB::select("SELECT photos.* , GROUP_CONCAT(tags.nom SEPARATOR ', ') AS tags
                 FROM photos
-                JOIN possede_tag ON possede_tag.photo_id = photos.id
-                JOIN tags ON tags.id = possede_tag.tag_id
+                LEFT JOIN possede_tag ON possede_tag.photo_id = photos.id
+                LEFT JOIN tags ON tags.id = possede_tag.tag_id
                 WHERE photos.album_id = ?
                 GROUP BY photos.id", [$id]);
                 return view("album", compact("photos"));

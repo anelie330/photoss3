@@ -1,10 +1,19 @@
+ <link rel="stylesheet" href="../css/style.css" />
 
 <?php $__env->startSection("content"); ?>        
 <?php $__currentLoopData = $photos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $p): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 <div id ="photos">
     <h3><?php echo e($p->titre); ?></h3>
-    <img src ="<?php echo e($p->url); ?>" alt ="<?php echo e($p->titre); ?>" />
+    <img class="photo" src ="<?php echo e($p->url); ?>" alt ="<?php echo e($p->titre); ?>" />
     <h3><?php echo e($p->tags); ?></h3>
+
+    <script>
+        document.querySelectorAll('.photos').forEach(function(img) {
+        img.addEventListener('click', function() {
+        img.classList.toggle('zoomed');
+    });
+});
+    </script>
 </div>
 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 <?php $__env->stopSection(); ?>
