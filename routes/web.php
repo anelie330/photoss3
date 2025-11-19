@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\FirstController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get("/", [FirstController::class, 'index']);
+Route::get("/{id}", [FirstController::class, 'album']) ->where("id", "[0-9]+");
+Route::get("/ajout", [FirstController::class, 'ajout']);
+Route::post("/ajout", [FirstController::class, 'store'])->name('ajout.store');
