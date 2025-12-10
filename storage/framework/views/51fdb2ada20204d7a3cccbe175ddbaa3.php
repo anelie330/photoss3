@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Spartan&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
@@ -22,7 +23,7 @@
 </header>
 
 <div class= "container">
-@yield("content")
+<?php echo $__env->yieldContent("content"); ?>
 </div>
 
 <footer>
@@ -31,4 +32,4 @@
 </footer>
 
 </body>
-</html>
+</html><?php /**PATH C:\Users\aneli\Documents\git\photoss3\resources\views/app.blade.php ENDPATH**/ ?>
