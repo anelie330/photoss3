@@ -13,8 +13,18 @@
         @endforeach
     </select><br/><br/>
     
-    <label for="url">Image (optionnel) :</label>
-    <input id="url" type="text" name="url"><br>
+    <label for="url">Image :</label>
+    <input id="url" type="text" name="url"><br/><br/>
+
+    <label for="tags">Tags :</label>
+    @foreach($tags as $tag)
+        <label>
+            <input type="checkbox" name="tag_id[]" value="{{ $tag->id }}">
+            {{ $tag->nom }}
+        </label>
+    @endforeach
+<br><br>
+
     
     <input type="submit" value="Ajouter la photo" />
 </form>

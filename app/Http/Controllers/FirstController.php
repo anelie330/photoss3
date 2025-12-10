@@ -13,19 +13,28 @@ class FirstController extends Controller
                 return view("index", compact("albums"));
             }
     function album($id) {
-                $photos = DB::select("SELECT * FROM photos WHERE album_id = ?", [$id]);
+                $photos = DB::select("SELECT photos.* , GROUP_CONCAT(tags.nom SEPARATOR ', ') AS tags
+                FROM photos
+                LEFT JOIN possede_tag ON possede_tag.photo_id = photos.id
+                LEFT JOIN tags ON tags.id = possede_tag.tag_id
+                WHERE photos.album_id = ?
+                GROUP BY photos.id", [$id]);
                 return view("album", compact("photos"));
             }
     function ajout() {
-                $albums = DB::select("SELECT * FROM albums");
-                return view("ajout", compact("albums"));
-            }
+        $albums = DB::select("SELECT * FROM albums");
+        $tags = DB::select("SELECT * FROM tags");
+        return view("ajout", compact("albums", "tags"));
+    }
+
     function store(Request $request) {
-        $validated = $request->validate([
+            $validated = $request->validate([
             'titre' => 'required|string|max:200',
             'url' => 'nullable|url',
-            'album_id' => 'integer|exists:albums,id'
-            ]);
+            'album_id' => 'integer|exists:albums,id',
+            'tag_id' => 'array',
+            'tag_id.*' => 'integer|exists:tags,id'
+        ]);
 
             DB::insert("INSERT INTO photos (titre, url, album_id) VALUES (?, ?, ?)",
             [
@@ -34,6 +43,16 @@ class FirstController extends Controller
             $validated['album_id']
         ]
         );
-            return redirect("/{$validated['album_id']}");
-}
+        
+        $photo_id = DB::getPdo()->lastInsertId();
+
+        foreach ($validated['tag_id'] as $tag) {
+        DB::insert(
+            "INSERT INTO possede_tag (photo_id, tag_id) VALUES (?, ?)",
+            [$photo_id, $tag]
+        );
+        }
+
+        return redirect("/{$validated['album_id']}");
+        }
 }
