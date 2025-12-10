@@ -14,11 +14,11 @@
 
 <body>
 <header>
-    <a href="/" alt="logo">Memories 4EVer</a>
-        <nav>
-            <li><a href="/">Albums</a></li>
-            <li><a href="/ajout">Ajouter des photos</a></li>
-        </nav>
+    <a href="/" class="logo">Memories 4EVer</a>
+    <nav id="nav">
+        <a href="/">Albums</a>
+        <a href="/ajout">Ajouter des photos</a>
+    </nav>
 </header>
 
 <div class= "container">
@@ -26,7 +26,7 @@
 </div>
 
 <footer>
-    <a href="/" alt="logo">Memories 4EVer</a>
+    <a href="/" class="logo">Memories 4EVer</a>
     <p>© 2025 Memories 4Ever</p>
 </footer>
 

@@ -5,11 +5,59 @@
 }
 
 body {
-    background-color: aqua;
-    font-family: Montserrat;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .container {
     max-width: 1300px;
-    margin: auto;
+    margin: 0 auto;
+}
+
+a{
+    text-decoration: none;
+}
+
+/****HEADER****/
+header{
+  display: flex;
+  justify-content: space-between;
+  padding: 1.5rem;
+  align-items: center;
+  background-color: rgb(240, 238, 238);
+  margin-bottom: 1rem;
+}
+
+.logo{
+    color:pink;
+    font-size: 1.5rem;
+    font-weight: 600;
+    font-family: Comic Sans MS;
+}
+
+#nav a{
+    color: pink;
+    margin-left: 20px;
+}
+
+header a:hover{
+    color:palevioletred;
+}
+
+/***FOOTER****/
+footer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgb(240, 238, 238);
+    margin-top: 1rem;
+    padding: 1.5rem;
+    color: pink;
+}
+
+footer a{
+  color: pink;
+}
+
+footer a:hover{
+    color:palevioletred;
 }
