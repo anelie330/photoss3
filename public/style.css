@@ -30,18 +30,38 @@ header{
 .logo{
     color:pink;
     font-size: 1.5rem;
-    font-weight: 600;
-    font-family: Comic Sans MS;
+    font-family: "Playwrite NO", cursive;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+header img{
+    width: 50px;
 }
 
 #nav a{
-    color: pink;
+    color: orange;
     margin-left: 20px;
 }
 
 header a:hover{
-    color:palevioletred;
+    color:orangered;
 }
+
+
+
+
+.photo {
+    width: 200px;
+}
+
+
+
+
+
+
+
 
 /***FOOTER****/
 footer{
