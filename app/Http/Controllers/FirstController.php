@@ -103,4 +103,12 @@ function filterPhotos(Request $request, $album_id) {
         return redirect("/{$validated['album_id']}");
         }
 
+        function deletePhoto($id) {
+            DB::delete("DELETE FROM possede_tag WHERE photo_id = ?", [$id]);
+
+            DB::delete("DELETE FROM photos WHERE id = ?", [$id]);
+
+            return back();
+        }
+
 }

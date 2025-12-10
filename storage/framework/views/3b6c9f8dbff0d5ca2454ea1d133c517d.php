@@ -26,7 +26,14 @@
     <h3><?php echo e($p->titre); ?></h3>
     <img class="photo" src ="<?php echo e($p->url); ?>" alt ="<?php echo e($p->titre); ?>" />
     <h3><?php echo e($p->tags); ?></h3>
-
+    
+    <form action="/<?php echo e($p->id); ?>" method="POST" style="display:inline;" onsubmit="return confirm('Supprimer cette photo ?')">
+        <?php echo csrf_field(); ?>
+        <?php echo method_field('DELETE'); ?>
+        <button type="submit" style="background:none; border:none; cursor:pointer;">
+            <i class="fa-solid fa-trash-can"></i>
+        </button>
+    </form>
 </div>
 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 <script>

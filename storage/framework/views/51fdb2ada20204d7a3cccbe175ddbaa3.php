@@ -9,16 +9,19 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Spartan&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playwrite+NO:wght@100..400&display=swap" rel="stylesheet">
 </head>
 
 <body>
 <header>
-    <a href="/" alt="logo">Memories 4EVer</a>
-        <nav>
-            <li><a href="/">Albums</a></li>
-            <li><a href="/ajout">Ajouter des photos</a></li>
-        </nav>
+    <div>
+    <img src="/flora.png"/>
+    <a href="/" class="logo">Memories 4EVer</a>
+    </div>
+    <nav id="nav">
+        <a href="/">Albums</a>
+        <a href="/ajout">Ajouter des photos</a>
+    </nav>
 </header>
 
 <div class= "container">
@@ -26,7 +29,7 @@
 </div>
 
 <footer>
-    <a href="/" alt="logo">Memories 4EVer</a>
+    <a href="/" class="logo">Memories 4EVer</a>
     <p>© 2025 Memories 4Ever</p>
 </footer>
 

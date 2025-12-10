@@ -19,3 +19,5 @@ Route::get("/{id}", [FirstController::class, 'album']) ->where("id", "[0-9]+");
 Route::get('/{id}/filter', [FirstController::class, 'filterPhotos']);
 Route::get("/ajout", [FirstController::class, 'ajout']);
 Route::post("/ajout", [FirstController::class, 'store'])->name('ajout.store');
+Route::delete('/{id}', [FirstController::class, 'deletePhoto']);
+
