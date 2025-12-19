@@ -9,12 +9,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Playwrite+NO:wght@100..400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Oi&family=Playwrite+NO:wght@100..400&display=swap" rel="stylesheet">
 </head>
 
 <body>
 <header>
-    <div>
+    <div id="logo">
     <img src="/flora.png"/>
     <a href="/" class="logo">Memories 4EVer</a>
     </div>
