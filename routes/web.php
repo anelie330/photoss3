@@ -15,6 +15,7 @@ use App\Http\Controllers\FirstController;
 */
 
 Route::get("/", [FirstController::class, 'index']);
+Route::get('/filter', [FirstController::class, 'filterAlbums']);
 Route::get("/{id}", [FirstController::class, 'album']) ->where("id", "[0-9]+");
 Route::get('/{id}/filter', [FirstController::class, 'filterPhotos']);
 Route::get("/ajout", [FirstController::class, 'ajout']);

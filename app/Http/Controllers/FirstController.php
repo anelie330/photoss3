@@ -75,6 +75,27 @@ function filterPhotos(Request $request, $album_id) {
     return view("album", compact("album", "photos", "tags"));
 }
 
+function filterAlbums(Request $request) {
+    $search = $request->get('search');
+    $trier = $request->get('trier');
+    $sql = "SELECT * FROM albums WHERE 1=1";
+    $params = [];
+
+    if (!empty($search)) {
+        $sql .= " AND titre LIKE ?";
+        $params[] = "%$search%";
+    }
+    if ($trier === 'titre') {
+        $sql .= " ORDER BY titre ASC";
+    } elseif ($trier === 'date') {
+    $sql .= " ORDER BY created_at DESC";
+    } else {
+        $sql .= " ORDER BY id DESC";
+    }
+    
+    $albums = DB::select($sql, $params);
+    return view("index", compact("albums"));
+}
 
     function ajout() {
         $albums = DB::select("SELECT * FROM albums");
