@@ -9,12 +9,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
-<<<<<<< HEAD
   <link href="https://fonts.googleapis.com/css2?family=Playwrite+NO:wght@100..400&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" rel="stylesheet">
-=======
   <link href="https://fonts.googleapis.com/css2?family=Oi&family=Playwrite+NO:wght@100..400&display=swap" rel="stylesheet">
->>>>>>> 3d254957b1b1006837a9c7c736d5ec750cd53660
 </head>
 
 <body>

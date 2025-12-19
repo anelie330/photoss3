@@ -11,19 +11,29 @@
             </option>
         @endforeach
     </select>
-    <input type="submit" value="Filtrer" />
+
+    <label for="trier">Trier par :</label>
+    <select id="trier" name="trier">
+        <option value="">--Sélectionner--</option>
+        <option value="titre" @if(request()->get('trier') == 'titre') selected @endif>Titre</option>
+        <option value="note" @if(request()->get('trier') == 'note') selected @endif>Note</option>
+    </select>
 
     <label for="search">Titre :</label>
     <input type="text" id="search" name="search" value="{{ request()->get('search') }}" placeholder="Rechercher" />
 
-    <input type="submit" value="Filtrer" />
+    <input type="submit" value="Appliquer" />
 </form>
+
 
 
 @foreach($photos as $p)
 <div id ="photos">
     <h3>{{$p->titre}}</h3>
-    <img class="photo" src ="{{$p->url}}" alt ="{{$p->titre}}" />
+    <img class="photo"
+     src="{{ str_starts_with($p->url, 'http') ? $p->url : asset('storage/' . $p->url) }}"
+     alt="{{ $p->titre }}">
+
     <h3>{{$p->tags}}</h3>
     
     <form action="/{{ $p->id }}" method="POST" style="display:inline;" onsubmit="return confirm('Supprimer cette photo ?')">

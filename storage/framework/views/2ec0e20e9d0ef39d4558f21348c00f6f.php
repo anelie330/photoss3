@@ -13,8 +13,8 @@
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
     </select><br/><br/>
     
-    <label for="url">Image :</label>
-    <input id="url" type="text" name="url"><br/><br/>
+    <label for="image">Image :</label>
+    <input type="file" id="image" name="image" accept="image/*" required>
 
     <label for="tags">Tags :</label>
     <?php $__currentLoopData = $tags; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tag): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -24,6 +24,10 @@
 
         </label>
     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+    <label for="note">Note :</label>
+    <input type="number" id="note" name="note" min="0" max="5" />
+
 <br><br>
 
     

@@ -30,11 +30,11 @@ class FirstController extends Controller
 }
 
 function filterPhotos(Request $request, $album_id) {
-
     $album = DB::select("SELECT * FROM albums WHERE id = ?", [$album_id])[0];
 
     $tagId = $request->get('tag_id');
     $search = $request->get('search');
+    $trier = $request->get('trier'); // 'titre' ou 'note'
 
     $sql = "
         SELECT photos.*, GROUP_CONCAT(tags.nom SEPARATOR ', ') AS tags
@@ -61,6 +61,14 @@ function filterPhotos(Request $request, $album_id) {
 
     $sql .= " GROUP BY photos.id";
 
+    if ($trier === 'titre') {
+        $sql .= " ORDER BY photos.titre ASC";
+    } elseif ($trier === 'note') {
+        $sql .= " ORDER BY photos.note DESC";
+    } else {
+        $sql .= " ORDER BY photos.id DESC";
+    }
+
     $photos = DB::select($sql, $params);
     $tags = DB::select("SELECT * FROM tags");
 
@@ -71,37 +79,44 @@ function filterPhotos(Request $request, $album_id) {
     function ajout() {
         $albums = DB::select("SELECT * FROM albums");
         $tags = DB::select("SELECT * FROM tags");
-        return view("ajout", compact("albums", "tags"));
+        $notes = DB::select("SELECT * FROM photos");
+        return view("ajout", compact("albums", "tags", "notes"));
     }
 
-    function store(Request $request) {
-            $validated = $request->validate([
+    function store(Request $request)
+    {
+        $validated = $request->validate([
             'titre' => 'required|string|max:200',
-            'url' => 'nullable|url',
-            'album_id' => 'integer|exists:albums,id',
+            'image' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'album_id' => 'required|integer|exists:albums,id',
             'tag_id' => 'array',
-            'tag_id.*' => 'integer|exists:tags,id'
+            'tag_id.*' => 'integer|exists:tags,id',
+            'note' => 'nullable|integer|min:0|max:5'
         ]);
 
-            DB::insert("INSERT INTO photos (titre, url, album_id) VALUES (?, ?, ?)",
-            [
-            $validated['titre'],
-            $validated['url'] ?? null,
-            $validated['album_id']
-        ]
-        );
-        
-        $photo_id = DB::getPdo()->lastInsertId();
+        $chemin = $request->file('image')->store('photos', 'public');
 
-        foreach ($validated['tag_id'] as $tag) {
         DB::insert(
-            "INSERT INTO possede_tag (photo_id, tag_id) VALUES (?, ?)",
-            [$photo_id, $tag]
+            "INSERT INTO photos (titre, url, album_id, note) VALUES (?, ?, ?, ?)",
+            [
+                $validated['titre'],
+                $chemin,
+                $validated['album_id'],
+                $validated['note']
+            ]
         );
+
+        $photoId = DB::getPdo()->lastInsertId();
+
+        foreach ($validated['tag_id'] ?? [] as $tagId) {
+            DB::insert(
+                "INSERT INTO possede_tag (photo_id, tag_id) VALUES (?, ?)",
+                [$photoId, $tagId]
+            );
         }
 
         return redirect("/{$validated['album_id']}");
-        }
+    }
 
         function deletePhoto($id) {
             DB::delete("DELETE FROM possede_tag WHERE photo_id = ?", [$id]);

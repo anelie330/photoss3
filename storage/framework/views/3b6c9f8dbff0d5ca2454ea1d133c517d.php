@@ -12,19 +12,29 @@
             </option>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
     </select>
-    <input type="submit" value="Filtrer" />
+
+    <label for="trier">Trier par :</label>
+    <select id="trier" name="trier">
+        <option value="">--Sélectionner--</option>
+        <option value="titre" <?php if(request()->get('trier') == 'titre'): ?> selected <?php endif; ?>>Titre</option>
+        <option value="note" <?php if(request()->get('trier') == 'note'): ?> selected <?php endif; ?>>Note</option>
+    </select>
 
     <label for="search">Titre :</label>
     <input type="text" id="search" name="search" value="<?php echo e(request()->get('search')); ?>" placeholder="Rechercher" />
 
-    <input type="submit" value="Filtrer" />
+    <input type="submit" value="Appliquer" />
 </form>
+
 
 
 <?php $__currentLoopData = $photos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $p): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 <div id ="photos">
     <h3><?php echo e($p->titre); ?></h3>
-    <img class="photo" src ="<?php echo e($p->url); ?>" alt ="<?php echo e($p->titre); ?>" />
+    <img class="photo"
+     src="<?php echo e(str_starts_with($p->url, 'http') ? $p->url : asset('storage/' . $p->url)); ?>"
+     alt="<?php echo e($p->titre); ?>">
+
     <h3><?php echo e($p->tags); ?></h3>
     
     <form action="/<?php echo e($p->id); ?>" method="POST" style="display:inline;" onsubmit="return confirm('Supprimer cette photo ?')">
