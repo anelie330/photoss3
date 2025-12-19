@@ -9,93 +9,111 @@ class FirstController extends Controller
 {
     //
     function index() {
-                $albums = DB::select("SELECT * FROM albums");
-                return view("index", compact("albums"));
-            }
+        $albums = DB::select("SELECT 
+                albums.*,
+                (
+                    SELECT photos.url
+                    FROM photos
+                    WHERE photos.album_id = albums.id
+                    ORDER BY photos.id ASC
+                    LIMIT 1
+                ) AS cover
+            FROM albums
+        ");
+
+        return view("index", compact("albums"));
+    }
     function album($id) {
-    $album = DB::select("SELECT * FROM albums WHERE id = ?", [$id])[0];
+        $album = DB::select("SELECT * FROM albums WHERE id = ?", [$id])[0];
 
-    $photos = DB::select("
-        SELECT photos.*, GROUP_CONCAT(tags.nom SEPARATOR ', ') AS tags
-        FROM photos
-        LEFT JOIN possede_tag ON possede_tag.photo_id = photos.id
-        LEFT JOIN tags ON tags.id = possede_tag.tag_id
-        WHERE photos.album_id = ?
-        GROUP BY photos.id
-    ", [$id]);
+        $photos = DB::select("
+            SELECT photos.*, GROUP_CONCAT(tags.nom SEPARATOR ', ') AS tags
+            FROM photos
+            LEFT JOIN possede_tag ON possede_tag.photo_id = photos.id
+            LEFT JOIN tags ON tags.id = possede_tag.tag_id
+            WHERE photos.album_id = ?
+            GROUP BY photos.id
+        ", [$id]);
 
-    $tags = DB::select("SELECT * FROM tags");
+        $tags = DB::select("SELECT * FROM tags");
 
-    return view("album", compact("album", "photos", "tags"));
-}
-
-function filterPhotos(Request $request, $album_id) {
-    $album = DB::select("SELECT * FROM albums WHERE id = ?", [$album_id])[0];
-
-    $tagId = $request->get('tag_id');
-    $search = $request->get('search');
-    $trier = $request->get('trier'); // 'titre' ou 'note'
-
-    $sql = "
-        SELECT photos.*, GROUP_CONCAT(tags.nom SEPARATOR ', ') AS tags
-        FROM photos
-        LEFT JOIN possede_tag ON possede_tag.photo_id = photos.id
-        LEFT JOIN tags ON tags.id = possede_tag.tag_id
-        WHERE photos.album_id = ?
-    ";
-    $params = [$album_id];
-
-    if (!empty($tagId)) {
-        $sql .= " AND photos.id IN (
-            SELECT photo_id
-            FROM possede_tag
-            WHERE tag_id = ?
-        )";
-        $params[] = $tagId;
+        return view("album", compact("album", "photos", "tags"));
     }
 
-    if (!empty($search)) {
-        $sql .= " AND photos.titre LIKE ?";
-        $params[] = "%$search%";
+    function filterPhotos(Request $request, $album_id) {
+        $album = DB::select("SELECT * FROM albums WHERE id = ?", [$album_id])[0];
+
+        $tagId = $request->get('tag_id');
+        $search = $request->get('search');
+        $trier = $request->get('trier'); // 'titre' ou 'note'
+
+        $sql = "
+            SELECT photos.*, GROUP_CONCAT(tags.nom SEPARATOR ', ') AS tags
+            FROM photos
+            LEFT JOIN possede_tag ON possede_tag.photo_id = photos.id
+            LEFT JOIN tags ON tags.id = possede_tag.tag_id
+            WHERE photos.album_id = ?
+        ";
+        $params = [$album_id];
+
+        if (!empty($tagId)) {
+            $sql .= " AND photos.id IN (
+                SELECT photo_id
+                FROM possede_tag
+                WHERE tag_id = ?
+            )";
+            $params[] = $tagId;
+        }
+
+        if (!empty($search)) {
+            $sql .= " AND photos.titre LIKE ?";
+            $params[] = "%$search%";
+        }
+
+        $sql .= " GROUP BY photos.id";
+
+        if ($trier === 'titre') {
+            $sql .= " ORDER BY photos.titre ASC";
+        } elseif ($trier === 'note') {
+            $sql .= " ORDER BY photos.note DESC";
+        } else {
+            $sql .= " ORDER BY photos.id DESC";
+        }
+
+        $photos = DB::select($sql, $params);
+        $tags = DB::select("SELECT * FROM tags");
+
+        return view("album", compact("album", "photos", "tags"));
     }
 
-    $sql .= " GROUP BY photos.id";
+    function filterAlbums(Request $request) {
+        $search = $request->get('search');
+        $trier = $request->get('trier');
+        $sql = "SELECT albums.*,
+            (   SELECT photos.url FROM photos
+                WHERE photos.album_id = albums.id ORDER BY photos.id ASC
+                LIMIT 1
+            ) AS cover
+        FROM albums
+        WHERE 1=1";
 
-    if ($trier === 'titre') {
-        $sql .= " ORDER BY photos.titre ASC";
-    } elseif ($trier === 'note') {
-        $sql .= " ORDER BY photos.note DESC";
-    } else {
-        $sql .= " ORDER BY photos.id DESC";
+        $params = [];
+
+        if (!empty($search)) {
+            $sql .= " AND titre LIKE ?";
+            $params[] = "%$search%";
+        }
+        if ($trier === 'titre') {
+            $sql .= " ORDER BY titre ASC";
+        } elseif ($trier === 'date') {
+        $sql .= " ORDER BY creation DESC";
+        } else {
+            $sql .= " ORDER BY id DESC";
+        }
+        
+        $albums = DB::select($sql, $params);
+        return view("index", compact("albums"));
     }
-
-    $photos = DB::select($sql, $params);
-    $tags = DB::select("SELECT * FROM tags");
-
-    return view("album", compact("album", "photos", "tags"));
-}
-
-function filterAlbums(Request $request) {
-    $search = $request->get('search');
-    $trier = $request->get('trier');
-    $sql = "SELECT * FROM albums WHERE 1=1";
-    $params = [];
-
-    if (!empty($search)) {
-        $sql .= " AND titre LIKE ?";
-        $params[] = "%$search%";
-    }
-    if ($trier === 'titre') {
-        $sql .= " ORDER BY titre ASC";
-    } elseif ($trier === 'date') {
-    $sql .= " ORDER BY created_at DESC";
-    } else {
-        $sql .= " ORDER BY id DESC";
-    }
-    
-    $albums = DB::select($sql, $params);
-    return view("index", compact("albums"));
-}
 
     function ajout() {
         $albums = DB::select("SELECT * FROM albums");
@@ -139,12 +157,29 @@ function filterAlbums(Request $request) {
         return redirect("/{$validated['album_id']}");
     }
 
-        function deletePhoto($id) {
-            DB::delete("DELETE FROM possede_tag WHERE photo_id = ?", [$id]);
+    function deletePhoto($id) {
+        DB::delete("DELETE FROM possede_tag WHERE photo_id = ?", [$id]);
 
-            DB::delete("DELETE FROM photos WHERE id = ?", [$id]);
+        DB::delete("DELETE FROM photos WHERE id = ?", [$id]);
 
-            return back();
-        }
+        return back();
+    }
 
+    function ajoutAlbum() {
+        return view("ajoutAlbum");
+    }
+
+    function storeAlbum(Request $request) {
+        $validated = $request->validate([
+            'titre' => 'required|string|max:200'
+        ]);
+
+        DB::insert(
+            "INSERT INTO albums (titre, creation) VALUES (?, ?)",
+            [$request->titre, now()]
+        );
+
+
+        return redirect('/')->with('success', 'Album créé');
+    }
 }

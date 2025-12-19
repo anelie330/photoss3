@@ -17,7 +17,18 @@
 </form>        
 @foreach($albums as $a)
 <div id ="albums">
+    @if($a->cover)
+    <a href ="/{{$a->id}}"><img class="album-cover"
+     src="{{ str_starts_with($a->cover, 'http') ? $a->cover : asset('storage/' . $a->cover) }}"
+     alt="{{ $a->titre }}">
+    <h3>{{$a->titre}}</h3>
+    <h4>Créé le {{$a->creation}}</h4></a>
+    @else
+    <p>Aucune photo dans cet album.</p>
     <h3><a href ="/{{$a->id}}">{{$a->titre}} {{$a->creation}}</a></h3>
+    @endif
 </div>
 @endforeach
+
+<button><a href="/ajoutAlbum">Ajouter un album</a></button>
 @endsection

@@ -49,21 +49,6 @@ header a:hover{
     color:orangered;
 }
 
-.photo {
-    width: 200px;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-}
-
-.photo.zoomed {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(2.5);
-    z-index: 9999;
-    transition: transform 0.3s ease;
-}
-
 /***FOOTER****/
 footer{
     display: flex;
@@ -81,4 +66,29 @@ footer a{
 
 footer a:hover{
     color:palevioletred;
+}
+
+/**PHOTOS**/
+
+.photo {
+    width: 200px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.photo.zoomed {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(2.5);
+    z-index: 9999;
+    transition: transform 0.3s ease;
+}
+
+#etoile-jaune {
+    color: gold;
+}
+
+#etoile-grise {
+    color: lightgray;
 }

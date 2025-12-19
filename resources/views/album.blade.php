@@ -26,25 +26,42 @@
 </form>
 
 
-
+<section class="photo-section">
 @foreach($photos as $p)
-<div id ="photos">
-    <h3>{{$p->titre}}</h3>
-    <img class="photo"
-     src="{{ str_starts_with($p->url, 'http') ? $p->url : asset('storage/' . $p->url) }}"
-     alt="{{ $p->titre }}">
+    <div class="photos-album">
+        <h3>{{$p->titre}}</h3>
+        <img class="photo"
+        src="{{ str_starts_with($p->url, 'http') ? $p->url : asset('storage/' . $p->url) }}"
+        alt="{{ $p->titre }}">
 
-    <h3>{{$p->tags}}</h3>
-    
-    <form action="/{{ $p->id }}" method="POST" style="display:inline;" onsubmit="return confirm('Supprimer cette photo ?')">
-        @csrf
-        @method('DELETE')
-        <button type="submit" style="background:none; border:none; cursor:pointer;">
-            <i class="fa-solid fa-trash-can"></i>
-        </button>
-    </form>
-</div>
+        <h3>{{$p->tags}}</h3>
+        <h3>
+        @php
+        $note = $p->note ?? 0;
+        @endphp
+
+        @for ($i = 1; $i <= 5; $i++)
+            @if ($i <= $note)
+                <span id="etoile-jaune">&#9733;</span>
+            @else
+                <span id="etoile-grise">&#9733;</span>
+            @endif
+        @endfor
+        </h3>
+
+        <form class="delete-form" action="/photos/{{ $p->id }}" method="POST" style="display:inline;" onsubmit="return confirm('Supprimer cette photo ?')">
+            @csrf
+            @method('DELETE')
+            <button id="delete" type="submit">
+                <i class="fa-solid fa-trash-can"></i>
+            </button>
+        </form>
+    </div>
 @endforeach
+</section>
+
+<button><a href="/ajout">Ajouter des photos</a></button>
+
 <script>
     document.querySelectorAll('.photo').forEach(function(img) {
         img.addEventListener('click', function() {

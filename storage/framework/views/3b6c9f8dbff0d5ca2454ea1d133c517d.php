@@ -27,25 +27,42 @@
 </form>
 
 
-
+<section class="photo-section">
 <?php $__currentLoopData = $photos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $p): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-<div id ="photos">
-    <h3><?php echo e($p->titre); ?></h3>
-    <img class="photo"
-     src="<?php echo e(str_starts_with($p->url, 'http') ? $p->url : asset('storage/' . $p->url)); ?>"
-     alt="<?php echo e($p->titre); ?>">
+    <div class="photos-album">
+        <h3><?php echo e($p->titre); ?></h3>
+        <img class="photo"
+        src="<?php echo e(str_starts_with($p->url, 'http') ? $p->url : asset('storage/' . $p->url)); ?>"
+        alt="<?php echo e($p->titre); ?>">
 
-    <h3><?php echo e($p->tags); ?></h3>
-    
-    <form action="/<?php echo e($p->id); ?>" method="POST" style="display:inline;" onsubmit="return confirm('Supprimer cette photo ?')">
-        <?php echo csrf_field(); ?>
-        <?php echo method_field('DELETE'); ?>
-        <button type="submit" style="background:none; border:none; cursor:pointer;">
-            <i class="fa-solid fa-trash-can"></i>
-        </button>
-    </form>
-</div>
+        <h3><?php echo e($p->tags); ?></h3>
+        <h3>
+        <?php
+        $note = $p->note ?? 0;
+        ?>
+
+        <?php for($i = 1; $i <= 5; $i++): ?>
+            <?php if($i <= $note): ?>
+                <span id="etoile-jaune">&#9733;</span>
+            <?php else: ?>
+                <span id="etoile-grise">&#9733;</span>
+            <?php endif; ?>
+        <?php endfor; ?>
+        </h3>
+
+        <form class="delete-form" action="/photos/<?php echo e($p->id); ?>" method="POST" style="display:inline;" onsubmit="return confirm('Supprimer cette photo ?')">
+            <?php echo csrf_field(); ?>
+            <?php echo method_field('DELETE'); ?>
+            <button id="delete" type="submit">
+                <i class="fa-solid fa-trash-can"></i>
+            </button>
+        </form>
+    </div>
 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+</section>
+
+<button><a href="/ajout">Ajouter des photos</a></button>
+
 <script>
     document.querySelectorAll('.photo').forEach(function(img) {
         img.addEventListener('click', function() {

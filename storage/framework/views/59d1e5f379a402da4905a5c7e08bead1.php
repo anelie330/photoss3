@@ -17,9 +17,20 @@
 </form>        
 <?php $__currentLoopData = $albums; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $a): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 <div id ="albums">
+    <?php if($a->cover): ?>
+    <a href ="/<?php echo e($a->id); ?>"><img class="album-cover"
+     src="<?php echo e(str_starts_with($a->cover, 'http') ? $a->cover : asset('storage/' . $a->cover)); ?>"
+     alt="<?php echo e($a->titre); ?>">
+    <h3><?php echo e($a->titre); ?></h3>
+    <h4>Créé le <?php echo e($a->creation); ?></h4></a>
+    <?php else: ?>
+    <p>Aucune photo dans cet album.</p>
     <h3><a href ="/<?php echo e($a->id); ?>"><?php echo e($a->titre); ?> <?php echo e($a->creation); ?></a></h3>
+    <?php endif; ?>
 </div>
 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+<button><a href="/ajoutAlbum">Ajouter un album</a></button>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make("app", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\lolad\git\photoss3\resources\views/index.blade.php ENDPATH**/ ?>
