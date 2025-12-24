@@ -2,13 +2,13 @@
 @extends("app")
 @section("content")
 <h2>Filtrer / Trier :</h2>
-<form action="/filter" method="get">
+<form class="filter" action="/filter" method="get">
     <label for="search">Rechercher un titre :</label>
     <input type="text" id="search" name="search" value="{{ request()->get('search') }}" placeholder="Titre de l'album">
 
     <label for="trier">Trier par :</label>
     <select id="trier" name="trier">
-        <option value="">--Sélectionner--</option>
+        <option value="">Aucun</option>
         <option value="titre" @if(request()->get('trier') == 'titre') selected @endif>Titre</option>
         <option value="date" @if(request()->get('trier') == 'date') selected @endif>Date de création</option>
     </select>
@@ -27,6 +27,13 @@
     <p>Aucune photo dans cet album.</p>
     <h3><a href ="/{{$a->id}}">{{$a->titre}} {{$a->creation}}</a></h3>
     @endif
+    <form class="delete-form" action="/albums/{{$a->id}}" method="POST" style="display:inline;" onsubmit="return confirm('Supprimer cet album ?')">
+            @csrf
+            @method('DELETE')
+            <button id="delete" type="submit">
+                <i class="fa-solid fa-trash-can"></i>
+            </button>
+    </form>
 </div>
 @endforeach
 

@@ -3,7 +3,7 @@
 
 <h2>Créer un nouvel album</h2>
 
-<form action="/ajoutAlbum" method="POST">
+<form class="ajout" action="/ajoutAlbum" method="POST">
     @csrf
 
     <label for="titre">Titre de l’album :</label>
@@ -11,7 +11,7 @@
 
     <br><br>
 
-    <button type="submit">Créer</button>
+    <input type="submit" value="Créer"/>
 </form>
 
 @endsection

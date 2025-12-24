@@ -1,10 +1,10 @@
 
 <?php $__env->startSection("content"); ?>
 <h2>Filtrer :</h2>
-<form action="/<?php echo e($album->id); ?>/filter" method="get">
+<form class="filter" action="/<?php echo e($album->id); ?>/filter" method="get">
     <label for="tag_id">Tags :</label>
     <select id="tag_id" name="tag_id">
-        <option value="">--Sélectionner un tag--</option>
+        <option value="">Aucun tag sélectionné</option>
         <?php $__currentLoopData = $tags; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tag): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <option value="<?php echo e($tag->id); ?>" <?php if(request()->get('tag_id') == $tag->id): ?> selected <?php endif; ?>>
                 <?php echo e($tag->nom); ?>
@@ -15,7 +15,7 @@
 
     <label for="trier">Trier par :</label>
     <select id="trier" name="trier">
-        <option value="">--Sélectionner--</option>
+        <option value="">Aucun</option>
         <option value="titre" <?php if(request()->get('trier') == 'titre'): ?> selected <?php endif; ?>>Titre</option>
         <option value="note" <?php if(request()->get('trier') == 'note'): ?> selected <?php endif; ?>>Note</option>
     </select>
@@ -64,11 +64,25 @@
 <button><a href="/ajout">Ajouter des photos</a></button>
 
 <script>
-    document.querySelectorAll('.photo').forEach(function(img) {
-        img.addEventListener('click', function() {
-            img.classList.toggle('zoomed');
-        });
+document.querySelectorAll('.photo').forEach(function(img) {
+  img.addEventListener('click', function() {
+
+    const overlay = document.createElement('div');
+    overlay.classList.add('overlay');
+
+    const zoomedImg = document.createElement('img');
+    zoomedImg.src = img.src;
+    zoomedImg.alt = img.alt;
+
+    overlay.appendChild(zoomedImg);
+    document.body.appendChild(overlay);
+
+    overlay.addEventListener('click', function() {
+      overlay.remove();
     });
-    </script>
+  });
+});
+</script>
+
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make("app", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\lolad\git\photoss3\resources\views/album.blade.php ENDPATH**/ ?>

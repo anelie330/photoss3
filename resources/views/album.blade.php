@@ -1,10 +1,10 @@
 @extends("app")
 @section("content")
 <h2>Filtrer :</h2>
-<form action="/{{ $album->id }}/filter" method="get">
+<form class="filter" action="/{{ $album->id }}/filter" method="get">
     <label for="tag_id">Tags :</label>
     <select id="tag_id" name="tag_id">
-        <option value="">--Sélectionner un tag--</option>
+        <option value="">Aucun tag sélectionné</option>
         @foreach($tags as $tag)
             <option value="{{ $tag->id }}" @if(request()->get('tag_id') == $tag->id) selected @endif>
                 {{ $tag->nom }}
@@ -14,7 +14,7 @@
 
     <label for="trier">Trier par :</label>
     <select id="trier" name="trier">
-        <option value="">--Sélectionner--</option>
+        <option value="">Aucun</option>
         <option value="titre" @if(request()->get('trier') == 'titre') selected @endif>Titre</option>
         <option value="note" @if(request()->get('trier') == 'note') selected @endif>Note</option>
     </select>
@@ -63,10 +63,24 @@
 <button><a href="/ajout">Ajouter des photos</a></button>
 
 <script>
-    document.querySelectorAll('.photo').forEach(function(img) {
-        img.addEventListener('click', function() {
-            img.classList.toggle('zoomed');
-        });
+document.querySelectorAll('.photo').forEach(function(img) {
+  img.addEventListener('click', function() {
+
+    const overlay = document.createElement('div');
+    overlay.classList.add('overlay');
+
+    const zoomedImg = document.createElement('img');
+    zoomedImg.src = img.src;
+    zoomedImg.alt = img.alt;
+
+    overlay.appendChild(zoomedImg);
+    document.body.appendChild(overlay);
+
+    overlay.addEventListener('click', function() {
+      overlay.remove();
     });
-    </script>
+  });
+});
+</script>
+
 @endsection

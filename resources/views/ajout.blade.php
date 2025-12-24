@@ -1,7 +1,7 @@
 @extends("app")
 @section("content")        
 
-<form action="/ajout" method="post" enctype="multipart/form-data">
+<form class="ajout"action="/ajout" method="post" enctype="multipart/form-data">
     @csrf
     <label for="titre">Titre de la photo :</label>
     <input type="text" id="titre" name="titre" required /><br/><br/>

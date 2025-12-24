@@ -182,4 +182,14 @@ class FirstController extends Controller
 
         return redirect('/')->with('success', 'Album créé');
     }
+
+    function deleteAlbum($id) {
+        DB::delete("DELETE FROM possede_tag WHERE photo_id IN (SELECT id FROM photos WHERE album_id = ?)", [$id]);
+
+        DB::delete("DELETE FROM photos WHERE album_id = ?", [$id]);
+
+        DB::delete("DELETE FROM albums WHERE id = ?", [$id]);
+
+        return back();
+    }
 }

@@ -2,13 +2,13 @@
 
 <?php $__env->startSection("content"); ?>
 <h2>Filtrer / Trier :</h2>
-<form action="/filter" method="get">
+<form class="filter" action="/filter" method="get">
     <label for="search">Rechercher un titre :</label>
     <input type="text" id="search" name="search" value="<?php echo e(request()->get('search')); ?>" placeholder="Titre de l'album">
 
     <label for="trier">Trier par :</label>
     <select id="trier" name="trier">
-        <option value="">--Sélectionner--</option>
+        <option value="">Aucun</option>
         <option value="titre" <?php if(request()->get('trier') == 'titre'): ?> selected <?php endif; ?>>Titre</option>
         <option value="date" <?php if(request()->get('trier') == 'date'): ?> selected <?php endif; ?>>Date de création</option>
     </select>
@@ -27,6 +27,13 @@
     <p>Aucune photo dans cet album.</p>
     <h3><a href ="/<?php echo e($a->id); ?>"><?php echo e($a->titre); ?> <?php echo e($a->creation); ?></a></h3>
     <?php endif; ?>
+    <form class="delete-form" action="/albums/<?php echo e($a->id); ?>" method="POST" style="display:inline;" onsubmit="return confirm('Supprimer cet album ?')">
+            <?php echo csrf_field(); ?>
+            <?php echo method_field('DELETE'); ?>
+            <button id="delete" type="submit">
+                <i class="fa-solid fa-trash-can"></i>
+            </button>
+    </form>
 </div>
 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 

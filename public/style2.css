@@ -1,11 +1,9 @@
-/* RESET */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* GLOBAL */
 body {
   font-family: 'Montserrat', sans-serif;
   background: linear-gradient(120deg, #fff7f9, #fff1e6);
@@ -13,13 +11,18 @@ body {
   min-height: 100vh;
 }
 
-/* HEADER */
+.container {
+  margin-left: 260px;
+  padding: 3rem;
+}
+
+/*HEADER*/
 header {
   position: fixed;
-  left: 0;
   top: 0;
+  left: 0;
   width: 240px;
-  height: 100vh;
+  height: 100%;
   background: linear-gradient(180deg, #f7c6d9, #ffd6b3);
   padding: 2rem 1.5rem;
   display: flex;
@@ -27,15 +30,15 @@ header {
   justify-content: space-between;
 }
 
-/* LOGO */
+/*LOGO*/
 #logo {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 15px;
 }
 
 #logo img {
-  width: 40px;
+  width: 35%;
 }
 
 .logo {
@@ -46,7 +49,7 @@ header {
   font-weight: 600;
 }
 
-/* NAV */
+/*NAV*/
 #nav {
   display: flex;
   flex-direction: column;
@@ -60,34 +63,39 @@ header {
   font-weight: 500;
   padding: 0.6rem 0.8rem;
   border-radius: 10px;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
 }
 
 #nav a:hover {
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0.45);
   transform: translateX(4px);
 }
 
-/* MAIN CONTENT */
-.container {
-  margin-left: 260px;
-  padding: 3rem;
-}
-
-/* TITRES */
 h2 {
   margin-bottom: 2rem;
   font-weight: 600;
 }
 
-/* FORM */
-form {
-  background: #ffffff;
+/*FORMS*/
+form.filter {
+  background-color: #ffffff;
   padding: 1.5rem;
   border-radius: 18px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+form.ajout {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
   gap: 1rem;
   margin-bottom: 3rem;
 }
@@ -105,41 +113,95 @@ form select {
   outline: none;
 }
 
-form input[type="submit"] {
-  background: linear-gradient(135deg, #ff9f68, #f7c6d9);
+form input[type="submit"], form.ajout input[type="submit"] {
   border: none;
-  color: white;
+  color: #ffffff;
   font-weight: 600;
+  background: linear-gradient(135deg, #ff9f68, #f7c6d9);
   cursor: pointer;
-  padding: 0.7rem 1.2rem;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-form input[type="submit"]:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+form input:focus, form select:focus {
+  border-color: #ff9f68;
 }
 
 form.delete-form {
-    background: none;
-    border: none;
-    cursor: pointer;
-    box-shadow: none;
+  background: none;
+  padding: 0;
+  box-shadow: none;
 }
-/*ALBUM*/
+
+/*BOUTONS*/
+button {
+  margin-top: 3rem;
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+button a {
+  display: inline-block;
+  padding: 0.8rem 1.4rem;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #ff9f68, #f7c6d9);
+  color: #ffffff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+button a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 35px rgba(0,0,0,0.12);
+}
+
+#delete {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ff6b6b;
+  font-size: 18px;
+  margin: 15px 0;
+  transition: color 0.2s ease;
+}
+
+#delete:hover {
+  color: #ff3b3b;
+}
+
+/*INDEX*/
 #albums {
   display: inline-block;
   width: 220px;
   margin: 1rem;
-  background: white;
+  background-color: #ffffff;
   border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
-  transition: transform 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  text-align: center;
+  transition: all 0.25s ease;
 }
 
 #albums:hover {
   transform: translateY(-6px);
+  box-shadow: 0 14px 35px rgba(0,0,0,0.12);
+}
+
+#albums a {
+  text-decoration: none;
+  color: inherit;
+}
+
+#albums h3 {
+  padding: 1rem 1rem 0.2rem;
+  font-size: 0.95rem;
+}
+
+#albums h4 {
+  padding-bottom: 1rem;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #7a5c5c;
 }
 
 .album-cover {
@@ -148,106 +210,72 @@ form.delete-form {
   object-fit: cover;
 }
 
-#albums h3 {
-  padding: 1rem;
-  font-size: 0.95rem;
-  text-align: center;
-  text-transform: capitalize;
-}
-
-#albums h4 {
-  padding-bottom: 1rem;
-  font-size: 0.8rem;
-  font-weight: 400;
-  text-align: center;
-  color: #7a5c5c;
-}
-
-#albums a {
-  text-decoration: none;
-  color: inherit;
-}
-
-/*BUTTON*/
-button {
-    margin-top: 3rem;
-    padding: 0.8rem 1.4rem;
-    border-radius: 14px;
-    border: none;
-    background: linear-gradient(135deg, #f7c6d9, #ff9f68);
-    font-weight: 600;
-}
-
-button a {
-    text-decoration: none;
-    color: #fff;
-    background-color: #ff7f50;
-    padding: 10px 20px;
-    border-radius: 8px;
-    display: inline-block;
-    margin-top: 20px;
-    transition: background 0.2s;
-}
-
-button a:hover {
-    background-color: #ff5e3a;
-}
-
-#delete {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #ff6b6b;
-    font-size: 18px;
-    margin-top: 5px;
-}
-
-#delete:hover {
-    color: #ff3b3b;
-}
-
-
-
 /*PHOTOS*/
 .photo-section {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
 }
 
 .photos-album {
-    width: 220px;
-    background-color: #fff1f0;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    text-align: center;
-    padding: 10px;
-    transition: transform 0.2s, box-shadow 0.2s;
+  background-color: #ffffff;
+  border-radius: 18px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  transition: all 0.25s ease;
 }
 
 .photos-album:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  transform: translateY(-6px);
+  box-shadow: 0 14px 35px rgba(0,0,0,0.12);
 }
 
 .photos-album h3 {
-    margin: 10px 0 5px;
-    font-size: 16px;
-    color: #ff5e3a;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
 }
 
-/* Image de photo */
+/*IMAGES*/
 .photo {
-    width: 100%;
-    height: 140px;
-    object-fit: cover;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: transform 0.3s;
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
-.photo.zoomed {
-    transform: scale(2);
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.overlay img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 10px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  cursor: zoom-out;
+}
+
+/*NOTES*/
+#etoile-jaune {
+  color: #ffb703;
+  font-size: 18px;
+}
+
+#etoile-grise {
+  color: #e0e0e0;
+  font-size: 18px;
 }
 
 /*FOOTER*/

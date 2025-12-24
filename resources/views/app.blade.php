@@ -23,6 +23,7 @@
     <nav id="nav">
         <a href="/">Albums</a>
         <a href="/ajout">Ajouter des photos</a>
+        <a href="/ajoutAlbum">Ajouter un album</a>
     </nav>
 </header>
 
