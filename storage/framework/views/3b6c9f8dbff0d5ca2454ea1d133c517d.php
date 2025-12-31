@@ -62,6 +62,7 @@
 </section>
 
 <button><a href="/ajout">Ajouter des photos</a></button>
+<button><a href="/<?php echo e($album->id); ?>/editAlbum">Modifier l'album</a></button>
 
 <script>
 document.querySelectorAll('.photo').forEach(function(img) {

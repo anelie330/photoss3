@@ -24,4 +24,6 @@ Route::get("/ajout", [FirstController::class, 'ajout']);
 Route::post("/ajout", [FirstController::class, 'store'])->name('ajout.store');
 Route::delete('/photos/{id}', [FirstController::class, 'deletePhoto']);
 Route::delete('/albums/{id}', [FirstController::class, 'deleteAlbum']);
+Route::get('/{id}/editAlbum', [FirstController::class, 'editAlbum']);
+Route::post('/{id}/editAlbum', [FirstController::class, 'editAlbum']);
 

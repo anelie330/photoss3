@@ -192,4 +192,23 @@ class FirstController extends Controller
 
         return back();
     }
+
+    function editAlbum($id) {
+        $album = DB::select("SELECT * FROM albums WHERE id = ?", [$id])[0];
+
+        if (request()->isMethod('post')) {
+            $validated = request()->validate([
+                'titre' => 'required|string|max:200'
+            ]);
+
+            DB::update(
+                "UPDATE albums SET titre = ? WHERE id = ?",
+                [$validated['titre'], $id]
+            );
+
+            return redirect("/{$id}")->with('success', 'Album mis à jour');
+        }
+
+        return view("editAlbum", compact("album"));
+    }
 }
