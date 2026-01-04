@@ -1,7 +1,7 @@
 @extends("app")
 @section("content")        
 
-<form action="/ajout" method="post" enctype="multipart/form-data">
+<form class="ajout"action="/ajout" method="post" enctype="multipart/form-data">
     @csrf
     <label for="titre">Titre de la photo :</label>
     <input type="text" id="titre" name="titre" required /><br/><br/>
@@ -13,8 +13,8 @@
         @endforeach
     </select><br/><br/>
     
-    <label for="url">Image :</label>
-    <input id="url" type="text" name="url"><br/><br/>
+    <label for="image">Image :</label>
+    <input type="file" id="image" name="image" accept="image/*" required>
 
     <label for="tags">Tags :</label>
     @foreach($tags as $tag)
@@ -23,6 +23,10 @@
             {{ $tag->nom }}
         </label>
     @endforeach
+
+    <label for="note">Note :</label>
+    <input type="number" id="note" name="note" min="0" max="5" />
+
 <br><br>
 
     

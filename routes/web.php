@@ -15,6 +15,15 @@ use App\Http\Controllers\FirstController;
 */
 
 Route::get("/", [FirstController::class, 'index']);
+Route::get('/filter', [FirstController::class, 'filterAlbums']);
 Route::get("/{id}", [FirstController::class, 'album']) ->where("id", "[0-9]+");
+Route::get('/ajoutAlbum', [FirstController::class, 'ajoutAlbum']);
+Route::post('/ajoutAlbum', [FirstController::class, 'storeAlbum']);
+Route::get('/{id}/filter', [FirstController::class, 'filterPhotos']);
 Route::get("/ajout", [FirstController::class, 'ajout']);
 Route::post("/ajout", [FirstController::class, 'store'])->name('ajout.store');
+Route::delete('/photos/{id}', [FirstController::class, 'deletePhoto']);
+Route::delete('/albums/{id}', [FirstController::class, 'deleteAlbum']);
+Route::get('/{id}/editAlbum', [FirstController::class, 'editAlbum']);
+Route::post('/{id}/editAlbum', [FirstController::class, 'editAlbum']);
+

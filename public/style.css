@@ -6,7 +6,6 @@
 
 body {
     font-family: 'Montserrat', sans-serif;
-    background-color: rgb(246, 244, 244);
 }
 
 .container {
@@ -24,21 +23,17 @@ header{
   justify-content: space-between;
   padding: 1.5rem;
   align-items: center;
-  background-color: white;
+  background-color: rgb(240, 238, 238);
   margin-bottom: 1rem;
 }
 
 .logo{
-    color:#fe713b;
+    color:pink;
     font-size: 1.5rem;
-    font-family: "Oi", serif;
+    font-family: "Playwrite NO", cursive;
+    font-optical-sizing: auto;
     font-weight: 400;
     font-style: normal;
-}
-
-#logo{
-    display: flex;
-    align-items: center;
 }
 
 header img{
@@ -46,30 +41,54 @@ header img{
 }
 
 #nav a{
-    color: #fe713b;
+    color: orange;
     margin-left: 20px;
 }
 
-#nav a:hover{
-    color:#c74f1f;
+header a:hover{
+    color:orangered;
 }
-
-
-
-
-.photo {
-    width: 200px;
-}
-
-
 
 /***FOOTER****/
 footer{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: white;
+    background-color: rgb(240, 238, 238);
     margin-top: 1rem;
     padding: 1.5rem;
-    color:#fe713b;
+    color: pink;
+}
+
+footer a{
+  color: pink;
+}
+
+footer a:hover{
+    color:palevioletred;
+}
+
+/**PHOTOS**/
+
+.photo {
+    width: 200px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.photo.zoomed {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(2.5);
+    z-index: 9999;
+    transition: transform 0.3s ease;
+}
+
+#etoile-jaune {
+    color: gold;
+}
+
+#etoile-grise {
+    color: lightgray;
 }
